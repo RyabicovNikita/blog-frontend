@@ -1,0 +1,15 @@
+.app {
+  height: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.icon {
+  font-size: inherit;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,106 @@
+.blog {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  min-height: 80vh;
+  padding: 20px;
+  box-sizing: border-box;
+  &__input-url,
+  &__title-input {
+    all: unset;
+    width: 500px;
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #474545c2;
+    padding: 10px;
+    border-radius: 15px;
+  }
+  &__title-input {
+    width: 40%;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.671);
+    border: 1px solid white;
+    transition: 0.5s;
+    color: black;
+    bottom: 20px;
+    top: 70%;
+  }
+  &__top-content {
+    width: 100%;
+    height: 200px;
+    position: relative;
+  }
+  &__actions {
+    position: sticky;
+    display: flex;
+    flex-direction: column;
+    top: 30px;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin-right: 50px;
+    margin-top: 20px;
+  }
+  &__action-container {
+    cursor: pointer;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    background-color: white;
+    color: black;
+    padding: 10px;
+    border-radius: 25px;
+  }
+  &__main-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__date-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  &__date {
+    font-size: 15px;
+    margin-right: 15px;
+  }
+  &__main-content {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  &__edit-content {
+    display: inline-block;
+    border: 1px solid white;
+    border-radius: 25px;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: 0.5s;
+    max-height: 510px;
+    all: unset;
+    width: 100%;
+    text-align: left;
+    caret-color: white;
+    overflow-y: clip;
+    overflow-x: scroll;
+  }
+
+  &__content {
+    overflow-x: scroll;
+    white-space: pre-wrap;
+    padding: 10px;
+  }
+  &__content::selection,
+  &__edit-content::selection {
+    background: white;
+    color: black;
+  }
+  &__create-error {
+    font-size: 15px;
+  }
+}

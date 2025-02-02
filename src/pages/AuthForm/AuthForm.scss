@@ -1,0 +1,112 @@
+.auth {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../../images/main-page-background.png");
+  background-size: cover;
+  background-origin: border-box;
+  background-position: top;
+  background-repeat: no-repeat;
+  &__error {
+    font-size: 1.5vh;
+    color: red;
+    margin-top: 25px;
+  }
+  &__successful {
+    font-size: 15px;
+    color: green;
+    margin-top: 25px;
+  }
+  &__auth-blur {
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: blurBackground 2s;
+    animation-fill-mode: forwards;
+  }
+  &__auth-form {
+    padding: 25px;
+    box-sizing: border-box;
+    width: 500px;
+    height: 500px;
+    min-height: 500px;
+    height: max-content;
+    z-index: 1;
+    animation: displayAuthForm 1s;
+    animation-fill-mode: forwards;
+    will-change: opacity;
+    background: #ffffff4d;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  &__header-container {
+    color: black;
+    gap: 10%;
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__header {
+    font-family: "Beast";
+    font-size: 1em;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  &__input-fields {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10%;
+  }
+
+  &__submit {
+    width: 180px;
+    cursor: pointer;
+    padding: 6px;
+    background: black;
+    color: white;
+    border: 0;
+    border-radius: 15px;
+    font-family: "Boozy";
+    font-size: 1.5em;
+  }
+  input:focus {
+    transition: 1s;
+    outline: none;
+    color: white;
+    font-family: "Renju";
+  }
+}
+.footer {
+  animation: displayAuthForm 2s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes displayAuthForm {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blurBackground {
+  0% {
+    backdrop-filter: blur(0px);
+  }
+  100% {
+    backdrop-filter: blur(10px);
+  }
+}

@@ -1,0 +1,18 @@
+.contextMenu {
+  &__action-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  &__action {
+    background-color: black;
+    color: white;
+    padding: 7px;
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  &__action:hover {
+    transition: 0.3s;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.363);
+  }
+}

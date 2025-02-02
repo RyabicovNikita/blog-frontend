@@ -1,0 +1,38 @@
+@import url("./fonts/font-awesome.css");
+@import url("./fonts/font-main/fonts.css");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
+@import url(//fonts.googleapis.com/css?family=Abril+Fatface|Droid+Serif:400,700,400italic,700italic);
+.app {
+  background-color: black;
+  font-size: 30px;
+}
+body {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  overflow: clip;
+  color: white;
+  font-family: "Boozy";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+#root {
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+
+.active {
+  color: white;
+}
+
+.edit {
+  border: 1px solid white;
+}
+
+*::selection {
+  background: white;
+  color: black;
+}
