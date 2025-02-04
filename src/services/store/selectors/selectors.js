@@ -1,3 +1,5 @@
+import { mapComment } from "../../helpers";
+
 export const selectUserRole = ({ user }) => user.role_id;
 export const selectUserLogin = ({ user }) => user.login;
 export const selectUser = ({ user }) => user;
@@ -14,4 +16,4 @@ export const selectFilterPostsByTitle = ({ posts }, filter) => posts.filter((pos
 export const selectPost = ({ post }) => post.post;
 export const selectPostID = ({ post }) => post.post?.id;
 export const selectLikedUsers = ({ post }) => post.likedUsers;
-export const selectComments = ({ post }) => post.comments;
+export const selectComments = ({ post }) => post.comments?.map((comment) => mapComment(comment)) ?? [];

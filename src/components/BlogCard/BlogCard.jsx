@@ -3,7 +3,7 @@ import "./BlogCard.scss";
 import { dateTimeToDate, PROP_TYPES } from "../../services";
 
 export const BlogCard = ({ post, lastPostRef }) => {
-  const { id, title, content, image_url, published_at, likesCount, commentsCount } = post;
+  const { id, title, content, image_url, published_at, likesCount, comments } = post;
   return (
     <>
       <div className="blog-card spring-fever" ref={lastPostRef}>
@@ -30,11 +30,11 @@ export const BlogCard = ({ post, lastPostRef }) => {
                 <span className="licon icon-like" />
                 <span>{likesCount}</span>
                 <span className="licon icon-com" />
-                {<span>{commentsCount}</span>}
+                {<span>{comments.length}</span>}
               </li>
               <li>
                 <span className="licon icon-dat" />
-                {dateTimeToDate(published_at)}
+                {published_at}
               </li>
             </ul>
           </div>

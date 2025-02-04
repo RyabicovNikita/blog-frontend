@@ -2,15 +2,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Icon } from "../../..";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserLogin } from "../../../../services/store/selectors/selectors";
+import { selectUser, selectUserLogin } from "../../../../services/store/selectors/selectors";
 import { logout } from "../../../../services/store/slice/authSlice";
-import { debounce } from "../../../../services";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect } from "react";
 import { SearchContext } from "../../../../services/context/context";
 import { Search } from "../Search/Search";
 import PropTypes from "prop-types";
 
 import { request } from "../../../../utils";
+import { SESSION_STORAGE_USER } from "../../../../services";
 
 const NavBar = styled.div`
   display: flex;
@@ -39,9 +39,8 @@ export const NavBarContainer = ({ isMenuOpen, setIsMenuOpen, setContextMenuAnima
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userLogin = useSelector(selectUserLogin);
-
-  const { searchPhrase, setSearchPhrase, isSearch, setIsSearch } = useContext(SearchContext);
+  const user = useSelector(selectUser);
+  const { searchPhrase, setSearchPhrase, setIsSearch } = useContext(SearchContext);
 
   useEffect(() => {
     if (location.pathname !== "/" && searchPhrase !== "") setSearchPhrase("");
@@ -64,17 +63,18 @@ export const NavBarContainer = ({ isMenuOpen, setIsMenuOpen, setContextMenuAnima
     setContextMenuAnimation(animationOptions);
   };
   const handleLogout = () => {
-    if (!userLogin) return;
+    if (!user?.id) return;
     request("/logout", "POST").then(() => {
+      sessionStorage.removeItem(SESSION_STORAGE_USER);
       dispatch(logout());
     });
   };
 
-  const startDelayedSearch = useMemo(() => debounce(() => setIsSearch((prevState) => !prevState), 2000), []);
+  //const startDelayedSearch = useMemo(() => debounce(() => setIsSearch((prevState) => !prevState), 2000), []);
   const handleSearch = ({ target }) => {
     setSearchPhrase(target.value);
 
-    startDelayedSearch();
+    //  startDelayedSearch();
   };
   return (
     <NavBar>
@@ -84,8 +84,8 @@ export const NavBarContainer = ({ isMenuOpen, setIsMenuOpen, setContextMenuAnima
         styles={"&:hover {color: gray;transition: 0.6s;cursor: pointer;}"}
         onClick={() => navigate(-1)}
       />
-      <AuthLink to={!userLogin && "/auth"} onClick={handleLogout}>
-        {userLogin ? "Logout" : "Login"}
+      <AuthLink to={!user?.id && "/auth"} onClick={handleLogout}>
+        {user?.id ? "Logout" : "Login"}
       </AuthLink>
       <Icon className="fa fa-bars" onClick={onMenuClick} />
     </NavBar>

@@ -4,12 +4,13 @@ import { selectLikedUsers, selectPost, selectUser } from "../../../../services/s
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { fetchSavePost } from "../../../../api";
 import { addLike, deleteLike, POST_ACTION_TYPES } from "../../../../services/store/actions";
-import { MIN_HEIGTH_POST } from "../../../../services";
+import { MIN_HEIGTH_POST, ROLES } from "../../../../services";
 import { useForm } from "react-hook-form";
 import { Error } from "../../../../components/Error/Error";
 import { getPostFormParams } from "../../validates";
 import { Icon } from "../../../../components";
 import PropTypes from "prop-types";
+import { request } from "../../../../utils";
 
 const FIELD_NAME = {
   title: "title",
@@ -77,16 +78,27 @@ export const PostContent = ({ setIsModalOpen }) => {
 
   const onSubmit = () => {
     if (isEditPost === false) setIsEditPost(true);
-    else {
+    else if (
+      post.content !== postValue.content ||
+      post.title !== postValue.title ||
+      post.image_url !== postValue.image_url
+    ) {
       try {
-        fetchSavePost(post.id, postValue).then((newPost) => {
-          dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: newPost });
+        request(`/posts/${post.id}`, "PATCH", postValue).then((data) => {
+          if (data.error) {
+            setIsEditPost(false);
+            setServerError(data.error);
+            return;
+          }
+          dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: data });
           setIsEditPost(false);
           deleteServerErrorIfNeed();
         });
       } catch (error) {
         setServerError(error);
       }
+    } else {
+      setIsEditPost(false);
     }
   };
 
@@ -110,6 +122,7 @@ export const PostContent = ({ setIsModalOpen }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <section className="blog__top-content">
         <img alt="" className="blog__main-image" src={postValue.image_url}></img>
+        {<Error>{serverError}</Error>}
         {isEditPost && (
           <input
             name={FIELD_NAME.image_url}
@@ -136,7 +149,7 @@ export const PostContent = ({ setIsModalOpen }) => {
         </div>
         {titleError && <Error>{titleError}</Error>}
       </section>
-      {user_role_id !== 3 && (
+      {user_role_id !== ROLES.GHOST && (
         <div className="blog__blog-content">
           <div className="blog__actions" style={{ position: "relative" }}>
             <div className="blog__actions-container">

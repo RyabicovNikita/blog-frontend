@@ -19,7 +19,6 @@ const shapeObject = {
 };
 
 export const Comments = () => {
-  const deleteAccessRoles = [ROLES.ADMIN, ROLES.MODERATOR];
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
   const [deletedCommentID, setDeletedCommentID] = useState(null);
   const [sendOnHoverClass, setSendOnHoverClass] = useState("-o");
@@ -49,14 +48,14 @@ export const Comments = () => {
   const dispatch = useDispatch();
 
   const onSubmit = ({ comment }) => {
-    addNewComment(user, postId, comment).then((response) => {
+    addNewComment(postId, comment).then((response) => {
       if (response.error) {
         setServerError(response.error);
         return;
       }
       dispatch({
         type: POST_ACTION_TYPES.ADD_COMMENT,
-        payload: { ...response.res, author_login: user.login },
+        payload: response.body,
       });
     });
     reset();
@@ -71,7 +70,8 @@ export const Comments = () => {
   }, []);
 
   const handleContextMenu = (e, commentID) => {
-    if (!deleteAccessRoles.includes(user.role_id)) return;
+    const isAuthor = !!comments.find((comment) => comment.id === commentID && comment.author_login === user.login);
+    if (!isAuthor) return;
     setDeletedCommentID(commentID);
     e.preventDefault();
     setIsContextMenuOpen(true);
@@ -80,12 +80,10 @@ export const Comments = () => {
       y: e.pageY,
     });
   };
-  const actions = [
-    {
-      name: "Удалить комментарий",
-      onClick: () => dispatch(deleteComment(deletedCommentID)),
-    },
-  ];
+
+  const onDeleteCommentClick = () => {
+    dispatch(deleteComment(postId, deletedCommentID));
+  };
 
   const commentError = errors?.comment?.message;
   useEffect(() => {
@@ -126,7 +124,7 @@ export const Comments = () => {
         </form>
       )}
       <div className="comments__container">
-        {isContextMenuOpen && <ContextMenu top={points.y} left={points.x} actions={actions} />}
+        {isContextMenuOpen && <ContextMenu top={points.y} left={points.x} onClick={onDeleteCommentClick} />}
         {comments &&
           comments.map(({ id, author_login, content, published_at }) => (
             <Comment

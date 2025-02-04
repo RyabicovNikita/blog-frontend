@@ -1,7 +1,7 @@
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { server } from "../../bff/server";
+
 import { useState } from "react";
 import { Input } from "./components/Input/Input";
 import { Error } from "../../../src/components/Error/Error";

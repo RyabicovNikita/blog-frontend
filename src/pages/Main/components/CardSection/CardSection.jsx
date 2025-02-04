@@ -1,14 +1,16 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { contentBack_img } from "../../../../images";
 import { CardContainer, Scrollable, Section } from "../../styled-components";
-import { getPosts, POSTS_ACTION_TYPES } from "../../../../services/store/actions";
+import { POSTS_ACTION_TYPES } from "../../../../services/store/actions";
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts } from "../../../../services/store/selectors/selectors";
 import { BlogCard, Error, Footer } from "../../../../components";
-import { getLastPageFromLinks, PAGINATION_LIMIT } from "../../../../services";
+import { PAGINATION_LIMIT } from "../../../../services";
 import { SearchContext } from "../../../../services/context/context";
 import { ERRORS } from "../../../../services/constants/constants";
 import PropTypes from "prop-types";
+import { request } from "../../../../utils";
+import { mapPost } from "../../../../services/helpers";
 
 export const CardSection = ({ cardSectionRef }) => {
   const lastPostRef = useRef(null);
@@ -20,12 +22,12 @@ export const CardSection = ({ cardSectionRef }) => {
   const [lastPage, setLastPage] = useState(0);
 
   useEffect(() => {
-    getPosts(page, PAGINATION_LIMIT).then(({ posts, links }) => {
+    request(`/posts?page=${page}&limit=${PAGINATION_LIMIT}`).then(({ body: { posts, lastPage } }) => {
       dispatch({
         type: POSTS_ACTION_TYPES.GET_POSTS,
-        payload: posts,
+        payload: posts.map((post) => mapPost(post)),
       });
-      if (links) setLastPage(getLastPageFromLinks(links));
+      setLastPage(lastPage);
     });
   }, [page]);
 
@@ -60,7 +62,7 @@ export const CardSection = ({ cardSectionRef }) => {
 
   const getPostsBySearch = () => {
     const filteredPosts = posts.filter((post) =>
-      searchPhrase.length === 0 ? post : post.title.indexOf(searchPhrase) >= 0
+      searchPhrase.length === 0 ? post : post.title.toLowerCase().indexOf(searchPhrase.toLowerCase()) >= 0
     );
     if (filteredPosts.length === 0)
       return (

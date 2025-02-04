@@ -58,12 +58,12 @@ export const NewPost = () => {
 
   const handleSave = () => {
     try {
-      createNewPost(userSession, postValue).then((response) => {
+      createNewPost(postValue).then((response) => {
         if (response.error) {
           setServerError(response.error);
           return;
         }
-        const { id } = response.res;
+        const { id } = response.body;
         navigate(`/post/${id}`);
       });
     } catch (error) {

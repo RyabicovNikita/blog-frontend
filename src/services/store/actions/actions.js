@@ -10,7 +10,6 @@ import {
   fetchGetPosts,
 } from "../../../api";
 import { fetchGetRoles } from "../../../api/roles-requests";
-import { sessions } from "../../../bff/sessions";
 
 import { DateTime } from "luxon";
 import {
@@ -21,6 +20,8 @@ import {
   fetchGetPostLikedUsers,
 } from "../../../api/likes-requests";
 import { DATE_FORMATS, ROLES } from "../../constants/constants";
+import { request } from "../../../utils";
+import { mapPost } from "../../helpers";
 
 //Переделал на redux-toolkit
 // export const setUser = (user) => ({
@@ -30,13 +31,13 @@ import { DATE_FORMATS, ROLES } from "../../constants/constants";
 
 export const getUsers = async (userSession) => {
   const accessRoles = [ROLES.ADMIN];
-  const access = await sessions.access(userSession, accessRoles);
-  if (!access) {
-    return {
-      error: "Доступ к данным недоступен для текущего пользователя",
-      res: null,
-    };
-  }
+  // const access = await sessions.access(userSession, accessRoles);
+  // if (!access) {
+  //   return {
+  //     error: "Доступ к данным недоступен для текущего пользователя",
+  //     res: null,
+  //   };
+  // }
 
   return fetchGetUsers()
     .then((users) => ({ type: USERS_ACTION_TYPES.GET_USERS, payload: users }))
@@ -45,28 +46,20 @@ export const getUsers = async (userSession) => {
 
 export const getRoles = async (userSession) => {
   const accessRoles = [ROLES.ADMIN];
-  const access = await sessions.access(userSession, accessRoles);
-  if (!access) {
-    return {
-      error: "Доступ к данным недоступен для текущего пользователя",
-      res: null,
-    };
-  }
+  // const access = await sessions.access(userSession, accessRoles);
+  // if (!access) {
+  //   return {
+  //     error: "Доступ к данным недоступен для текущего пользователя",
+  //     res: null,
+  //   };
+  // }
   return fetchGetRoles()
     .then((roles) => ({ type: ROLES_ACTION_TYPES.GET_ROLES, payload: roles }))
     .catch((error) => ({ error: error, errorMsg: "Ошибка сервера", payload: null }));
 };
 
-export const addNewComment = async (user, postId, content) => {
-  const accessRoles = [ROLES.ADMIN];
-  const access = await sessions.access(user.session, accessRoles);
-  if (!access) {
-    return {
-      error: "Оставлять комментарии могут только авторизованные пользователи",
-      res: null,
-    };
-  }
-  return fetchAddCommentInPost(user.id, postId, content).then((newComment) => ({ res: newComment }));
+export const addNewComment = async (postId, content) => {
+  return request(`/posts/${postId}/comments`, "POST", { content: content });
 };
 
 export const getCommentsWithAuthor = (postId) =>
@@ -80,12 +73,15 @@ export const getCommentsWithAuthor = (postId) =>
   );
 
 export const getPost = async (postId) => {
-  const [post, commentsPost, likedUsers] = await Promise.all([
-    fetchGetPostById(postId),
-    getCommentsWithAuthor(postId),
-    fetchGetPostLikedUsers(postId),
-  ]);
-
+  const { error = "", body: post = {} } = await request(`/posts/${postId}`);
+  if (error) return { error: error };
+  // const [post, commentsPost, likedUsers] = await Promise.all([
+  //   fetchGetPostById(postId),
+  //   getCommentsWithAuthor(postId),
+  //   fetchGetPostLikedUsers(postId),
+  // ]);
+  const { comments: commentsPost } = post;
+  const likedUsers = [];
   const sortByDateComments = commentsPost.sort((a, b) => {
     if (
       DateTime.fromFormat(a.published_at, DATE_FORMATS.DATETIME) >
@@ -101,7 +97,7 @@ export const getPost = async (postId) => {
 
     return 0;
   });
-  return { post, comments: sortByDateComments, likedUsers };
+  return { post: mapPost(post), comments: sortByDateComments, likedUsers };
 };
 
 export const deletePost = async (postId) => {
@@ -117,22 +113,18 @@ export const deletePost = async (postId) => {
   }
 };
 
-export const createNewPost = async (hash, data) => {
-  const accessRoles = [ROLES.ADMIN];
-  const access = await sessions.access(hash, accessRoles);
-  if (!access) {
-    return {
-      error: "Создание поста доступно только авторизованным пользователям",
-      res: null,
-    };
-  }
-  return fetchCreatePost(data).then((newPostData) => ({ res: newPostData }));
+export const createNewPost = async (data) => {
+  return request(`/posts`, "POST", data);
+  // return fetchCreatePost(data).then((newPostData) => ({ res: newPostData }));
 };
 
-export const deleteComment = (commentId) => (dispatch) =>
-  fetchDeleteComment(commentId).then(() => dispatch({ type: POST_ACTION_TYPES.DELETE_COMMENT, payload: commentId }));
+export const deleteComment = (postId, commentId) => (dispatch) =>
+  request(`/posts/${postId}/comments/${commentId}`, "DELETE").then(() =>
+    dispatch({ type: POST_ACTION_TYPES.DELETE_COMMENT, payload: commentId })
+  );
 
 export const getPosts = async (page, limit) => {
+  request(`/posts?search`);
   const [postsWithLinks, likes, comments] = await Promise.all([
     fetchGetPosts(page, limit),
     fetchGetLikes(),

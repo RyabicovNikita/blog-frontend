@@ -2,7 +2,7 @@ import styled from "styled-components";
 import "./ContextMenu.scss";
 import PropTypes from "prop-types";
 
-export const ContextMenu = ({ actions, top, left }) => {
+export const ContextMenu = ({ onClick, top, left }) => {
   const ContextMenuStyled = styled.div`
     position: absolute;
     top: ${top}px;
@@ -13,14 +13,13 @@ export const ContextMenu = ({ actions, top, left }) => {
     color: black;
     font-size: 20px;
   `;
+
   return (
     <ContextMenuStyled>
       <ul className="contextMenu__action-list">
-        {actions.map(({ name, onClick }, index) => (
-          <li className="contextMenu__action" key={index} onClick={onClick}>
-            {name}
-          </li>
-        ))}
+        <li className="contextMenu__action" onClick={onClick}>
+          Удалить комментарий
+        </li>
       </ul>
     </ContextMenuStyled>
   );
