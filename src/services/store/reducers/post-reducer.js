@@ -1,8 +1,10 @@
 import { POST_ACTION_TYPES } from "../actions";
 
-const initialPostState = { comments: [], likedUsers: [] };
+const initialPostState = {};
 
 export const postReducer = (state = initialPostState, { type, payload }) => {
+  console.log(payload);
+  console.log(state);
   switch (type) {
     case POST_ACTION_TYPES.GET_POST:
       return { ...state, ...payload };
@@ -16,10 +18,10 @@ export const postReducer = (state = initialPostState, { type, payload }) => {
       return { ...state, ...payload };
     case POST_ACTION_TYPES.DELETE_COMMENT:
       return { ...state, comments: state.comments.filter((comment) => comment.id !== payload) };
-    case POST_ACTION_TYPES.LIKE:
-      return { ...state, likedUsers: [payload, ...state.likedUsers] };
+    // case POST_ACTION_TYPES.LIKE:
+    //   return { ...state, likedUsers: [payload, ...state.likedUsers] };
     case POST_ACTION_TYPES.DISLIKE:
-      return { ...state, likedUsers: state.likedUsers.filter(({ user_id }) => user_id !== payload) };
+      return { ...state, likes: state.likes.filter(({ _id }) => _id !== payload) };
     default:
       return state;
   }

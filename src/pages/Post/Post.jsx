@@ -19,7 +19,7 @@ export const Post = () => {
   useEffect(() => {
     getPost(postId)
       .then((postData) => {
-        if (Object.keys(postData.post).length > 0) dispatch({ type: POST_ACTION_TYPES.GET_POST, payload: postData });
+        dispatch({ type: POST_ACTION_TYPES.GET_POST, payload: postData });
       })
       .catch((error) => {
         switch (error) {
@@ -27,6 +27,7 @@ export const Post = () => {
             setServerError(<Error404 />);
             break;
           default:
+            console.error(error);
             setServerError("Что-то пошло не так. Повторите попытку позднее.");
         }
       })
@@ -41,6 +42,7 @@ export const Post = () => {
         setIsModalOpen(false);
         return;
       }
+      dispatch({ type: POST_ACTION_TYPES.CLEAR_POST_STATE });
       setIsModalOpen(false);
       navigate("/");
     });

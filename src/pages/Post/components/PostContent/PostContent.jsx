@@ -26,9 +26,7 @@ export const PostContent = ({ setIsModalOpen }) => {
   const contentRef = useRef(null);
   const dispatch = useDispatch();
   const post = useSelector(selectPost);
-
-  const likedUsers = useSelector(selectLikedUsers);
-
+  console.log(post);
   const {
     register,
     unregister,
@@ -40,9 +38,9 @@ export const PostContent = ({ setIsModalOpen }) => {
 
   const { id: userId, role_id: user_role_id } = useSelector(selectUser);
 
-  const { id: postId, image_url, published_at, content, title } = post;
+  const { id: postId, image_url, published_at, content, title, likes } = post;
 
-  const isUserPutLike = !!likedUsers.find((likeData) => likeData.user_id === userId);
+  const isUserPutLike = !!likes.find((id) => id === userId);
 
   const [isEditPost, setIsEditPost] = useState(false);
 
@@ -84,13 +82,13 @@ export const PostContent = ({ setIsModalOpen }) => {
       post.image_url !== postValue.image_url
     ) {
       try {
-        request(`/posts/${post.id}`, "PATCH", postValue).then((data) => {
-          if (data.error) {
+        request(`/posts/${post.id}`, "PATCH", postValue).then(({ body }) => {
+          if (body.error) {
             setIsEditPost(false);
-            setServerError(data.error);
+            setServerError(body.error);
             return;
           }
-          dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: data });
+          dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: body });
           setIsEditPost(false);
           deleteServerErrorIfNeed();
         });
@@ -111,11 +109,11 @@ export const PostContent = ({ setIsModalOpen }) => {
   };
 
   const onLikeClick = () => {
-    dispatch(addLike(userId, postId));
+    addLike(postId, userId).then(({ body }) => dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: body }));
   };
 
   const onDislikeClick = () => {
-    dispatch(deleteLike(userId, postId));
+    deleteLike(postId, userId).then(({ body }) => dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: body }));
   };
 
   return (

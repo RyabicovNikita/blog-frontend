@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { RecordSelectionMenu } from "../RecordSelectionMenu/RecordSelectionMenu";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchDeleteUser, fetchPostUserRole } from "../../../../api";
 import { selectRoles, selectUser } from "../../../../services/store/selectors/selectors";
 import { Button, Icon } from "../../../../components";
 import { Field } from "./components";
 import styled from "styled-components";
 import { PROP_TYPES } from "../../../../services";
+import { saveUser, deleteUser } from "../../../../api";
 import PropTypes from "prop-types";
 
 const Container = ({ className, children }) => <div className={className}>{children}</div>;
@@ -39,6 +39,19 @@ export const RoleWithSaveIcon = ({ user }) => {
     return () => window.removeEventListener("keydown", close);
   }, []);
 
+  const handleSave = async () => {
+    const newUser = await saveUser(user.id, { role_id: selectedRole?.id });
+    dispatch({
+      type: "UPDATE_USER_ROLE",
+      payload: { login: newUser.login, role_id: newUser.role_id },
+    });
+  };
+
+  const handleDelete = async () => {
+    await deleteUser(user.id);
+    dispatch({ type: "DELETE_USER", payload: user.id });
+  };
+
   return (
     <>
       {isMenuSelectOpen && (
@@ -51,13 +64,10 @@ export const RoleWithSaveIcon = ({ user }) => {
           roleName={selectedRole?.name}
           setIsMenuSelectOpen={setIsMenuSelectOpen}
         />
-        <Button
-          disabled={selectedRole?.id === user?.role_id}
-          onClick={() => dispatch(fetchPostUserRole(user.id, selectedRole?.id))}
-        >
+        <Button disabled={selectedRole?.id === user?.role_id} onClick={handleSave}>
           <Icon className="fa fa-floppy-o" />
         </Button>
-        <Button disabled={currentUser.login === user.login} onClick={() => dispatch(fetchDeleteUser(user.id))}>
+        <Button disabled={currentUser.login === user.login} onClick={handleDelete}>
           <Icon className="fa fa-trash" />
         </Button>
       </StyledContainer>

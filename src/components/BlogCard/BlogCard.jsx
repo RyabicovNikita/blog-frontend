@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import "./BlogCard.scss";
-import { dateTimeToDate, PROP_TYPES } from "../../services";
+import { PROP_TYPES } from "../../services";
 
 export const BlogCard = ({ post, lastPostRef }) => {
-  const { id, title, content, image_url, published_at, likesCount, comments } = post;
+  const { id, title, content, image_url, published_at, likes, comments } = post;
   return (
     <>
       <div className="blog-card spring-fever" ref={lastPostRef}>
@@ -28,7 +28,7 @@ export const BlogCard = ({ post, lastPostRef }) => {
             <ul className="utility-list">
               <li>
                 <span className="licon icon-like" />
-                <span>{likesCount}</span>
+                <span>{likes.length}</span>
                 <span className="licon icon-com" />
                 {<span>{comments.length}</span>}
               </li>
