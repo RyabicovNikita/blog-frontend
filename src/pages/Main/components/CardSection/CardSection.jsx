@@ -22,7 +22,7 @@ export const CardSection = ({ cardSectionRef }) => {
   const [lastPage, setLastPage] = useState(0);
 
   useEffect(() => {
-    request(`/posts?page=${page}&limit=${PAGINATION_LIMIT}`).then(({ body: { posts, lastPage } }) => {
+    request(`posts?page=${page}&limit=${PAGINATION_LIMIT}`).then(({ body: { posts, lastPage } }) => {
       dispatch({
         type: POSTS_ACTION_TYPES.GET_POSTS,
         payload: posts.map((post) => mapPost(post)),

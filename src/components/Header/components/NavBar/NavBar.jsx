@@ -64,7 +64,7 @@ export const NavBarContainer = ({ isMenuOpen, setIsMenuOpen, setContextMenuAnima
   };
   const handleLogout = () => {
     if (!user?.id) return;
-    request("/logout", "POST").then(() => {
+    request("logout", "POST").then(() => {
       sessionStorage.removeItem(SESSION_STORAGE_USER);
       dispatch(logout());
     });

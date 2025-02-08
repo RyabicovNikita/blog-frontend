@@ -67,9 +67,9 @@ export const AuthForm = () => {
   const onSubmit = async ({ login, password }) => {
     let response;
     if (isRegister) {
-      response = await request("/register", "POST", { login, password });
+      response = await request("register", "POST", { login, password });
     } else {
-      response = await request("/login", "POST", { login, password });
+      response = await request("login", "POST", { login, password });
     }
     const { error = "", user } = response;
     if (error) {

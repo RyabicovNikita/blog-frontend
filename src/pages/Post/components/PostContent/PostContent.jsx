@@ -82,7 +82,7 @@ export const PostContent = ({ setIsModalOpen }) => {
       post.image_url !== postValue.image_url
     ) {
       try {
-        request(`/posts/${post.id}`, "PATCH", postValue).then(({ body }) => {
+        request(`posts/${post.id}`, "PATCH", postValue).then(({ body }) => {
           if (body.error) {
             setIsEditPost(false);
             setServerError(body.error);
