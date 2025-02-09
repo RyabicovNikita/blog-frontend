@@ -28,7 +28,11 @@ const Header = styled.div`
   padding-right: 25px;
   box-sizing: border-box;
   box-shadow: 0px 20px 25px 2px rgba(0, 0, 0, 1);
+  overflow-y: scroll;
   ${({ href, backgroundposition, jcontent, fontSize }) => getStyles({ href, backgroundposition, jcontent, fontSize })}
+  @media(max-width: 780px) {
+    font-size: 20px;
+  }
 `;
 
 const LogoLink = styled(Link)`
@@ -37,6 +41,11 @@ const LogoLink = styled(Link)`
   color: white;
   padding: 10px;
   border-radius: 15px;
+  @media (max-width: 780px) {
+    font-size: 20px;
+    width: 100px;
+    padding: 30px;
+  }
   ${({ href, backgroundposition, jcontent, fontSize }) => getStyles({ href, backgroundposition, jcontent, fontSize })}
 `;
 

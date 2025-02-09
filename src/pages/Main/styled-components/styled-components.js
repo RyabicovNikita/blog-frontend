@@ -74,6 +74,9 @@ export const Title = styled.h1`
       background-position: 0px 50%;
     }
   }
+  @media (max-width: 780px) {
+    font-size: 50px;
+  }
 `;
 
 export const Arrow = styled.div`

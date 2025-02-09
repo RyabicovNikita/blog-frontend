@@ -33,6 +33,9 @@ const AuthLink = styled(Link)`
     color: gray;
     transition: 0.6s;
   }
+  @media (max-width: 780px) {
+    font-size: 20px;
+  }
 `;
 
 export const NavBarContainer = ({ isMenuOpen, setIsMenuOpen, setContextMenuAnimation }) => {

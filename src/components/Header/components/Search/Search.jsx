@@ -20,6 +20,7 @@ export const Search = styled(SearchContainer)`
   width: 45%;
   background-color: black;
   box-shadow: 1px -1px 15px 10px black;
+  min-width: 20px;
   &::placeholder {
     color: #474545c2;
   }

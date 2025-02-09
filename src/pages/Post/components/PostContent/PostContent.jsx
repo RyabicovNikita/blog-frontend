@@ -149,12 +149,14 @@ export const PostContent = ({ setIsModalOpen }) => {
           style={{ borderColor: titleError ? "red" : "white" }}
         >
           <input
+            id="edit_title"
             name={FIELD_NAME.title}
             className="blog__text-title"
-            value={postValue.title}
+            value={isEditPost ? postValue.title : ""}
             disabled={!isEditPost}
             onChange={onValidateChange}
           />
+          {!isEditPost && <label htmlFor="edit_title">{postValue.title}</label>}
           <div className="blog__date-container">
             <span className="blog__date">{published_at}</span>
           </div>

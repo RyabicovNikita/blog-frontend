@@ -14,12 +14,18 @@ const Navigate = styled.nav`
   justify-content: center;
   gap: 30px;
   background-color: #474545c2;
+  @media (max-width: 780px) {
+    padding: 5px;
+  }
 `;
 
 const NavLink = styled(Link)`
   color: ${({ location, to }) => (location === to ? "white" : "black")};
   font-family: "Elite";
   text-decoration: none;
+  @media (max-width: 780px) {
+    font-size: 20px;
+  }
 `;
 
 export const Navigation = () => {

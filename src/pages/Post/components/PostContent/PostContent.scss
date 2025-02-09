@@ -103,4 +103,10 @@
     position: absolute;
     height: fit-content;
   }
+  @media (max-width: 780px) {
+    font-size: 20px;
+    .title {
+      font-size: 15px;
+    }
+  }
 }
