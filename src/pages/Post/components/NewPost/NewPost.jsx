@@ -64,7 +64,7 @@ export const NewPost = () => {
           return;
         }
         const { id } = response.body;
-        navigate(`/post/${id}`);
+        navigate(`/posts/${id}`);
       });
     } catch (error) {
       setServerError(error);

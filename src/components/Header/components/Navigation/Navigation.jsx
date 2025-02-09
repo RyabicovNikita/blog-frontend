@@ -31,7 +31,7 @@ export const Navigation = () => {
         Main
       </NavLink>
       {roleId === ROLES.ADMIN && (
-        <NavLink to="/post" location={location.pathname}>
+        <NavLink to="/posts" location={location.pathname}>
           New Blog
         </NavLink>
       )}
