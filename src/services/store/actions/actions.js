@@ -11,11 +11,11 @@ export const getUsers = async () => {
 };
 
 export const addNewComment = async (postId, content) => {
-  return request(`${postId}/comments`, "POST", { content: content });
+  return request(`posts/${postId}/comments`, "POST", { content: content });
 };
 
 export const getPost = async (postId) => {
-  const { error = "", body: post = {} } = await request(`${postId}`);
+  const { error = "", body: post = {} } = await request(`posts/${postId}`);
   if (error) return { error: error };
   const { comments: commentsPost } = post;
   const sortByDateComments = commentsPost.sort((a, b) => {
@@ -38,7 +38,7 @@ export const getPost = async (postId) => {
 
 export const deletePost = async (postId) => {
   try {
-    request(`${postId}`);
+    request(`posts/${postId}`);
   } catch (error) {
     console.error(error);
   }
@@ -49,10 +49,10 @@ export const createNewPost = async (data) => {
 };
 
 export const deleteComment = (postId, commentId) => (dispatch) =>
-  request(`${postId}/comments/${commentId}`, "DELETE").then(() =>
+  request(`posts/${postId}/comments/${commentId}`, "DELETE").then(() =>
     dispatch({ type: POST_ACTION_TYPES.DELETE_COMMENT, payload: commentId })
   );
 
-export const addLike = (postId, userId) => request(`${postId}/like`, "PATCH", { userId: userId });
+export const addLike = (postId, userId) => request(`posts/${postId}/like`, "PATCH", { userId: userId });
 
-export const deleteLike = (postId, likeId) => request(`${postId}/like`, "DELETE", { likeId: likeId });
+export const deleteLike = (postId, likeId) => request(`posts/${postId}/like`, "DELETE", { likeId: likeId });
