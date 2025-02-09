@@ -4,13 +4,14 @@ import { Comment } from "./components/Comment/Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { selectComments, selectPostID, selectUser } from "../../../../services/store/selectors/selectors";
 
-import { addNewComment, deleteComment, POST_ACTION_TYPES } from "../../../../services/store/actions";
 import { ContextMenu, Error, Icon } from "../../../../components";
 
 import "./Comments.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ROLES } from "../../../../services";
+import { addNewComment, deleteComment } from "../../../../api";
+import { POST_ACTION_TYPES } from "../../../../services/store/constants";
 const shapeObject = {
   comment: yup
     .string()

@@ -1,4 +1,4 @@
-import { ROLES_ACTION_TYPES } from "../actions";
+import { ROLES_ACTION_TYPES } from "../constants";
 
 const initialRolesState = [];
 

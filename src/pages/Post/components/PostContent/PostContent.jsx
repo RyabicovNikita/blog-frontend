@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux";
 import "./PostContent.scss";
 import { selectLikedUsers, selectPost, selectUser } from "../../../../services/store/selectors/selectors";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { fetchSavePost } from "../../../../api";
-import { addLike, deleteLike, POST_ACTION_TYPES } from "../../../../services/store/actions";
+import { addLike, deleteLike } from "../../../../api";
+
 import { MIN_HEIGTH_POST, ROLES } from "../../../../services";
 import { useForm } from "react-hook-form";
 import { Error } from "../../../../components/Error/Error";
@@ -11,6 +11,7 @@ import { getPostFormParams } from "../../validates";
 import { Icon } from "../../../../components";
 import PropTypes from "prop-types";
 import { request } from "../../../../utils";
+import { POST_ACTION_TYPES } from "../../../../services/store/constants";
 
 const FIELD_NAME = {
   title: "title",

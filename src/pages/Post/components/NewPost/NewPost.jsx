@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import "./NewPost.scss";
 import { MIN_HEIGTH_POST, ROLES } from "../../../../services";
-import { createNewPost } from "../../../../services/store/actions";
+
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import { Error } from "../../../../components/Error/Error";
@@ -9,6 +9,7 @@ import { getPostFormParams } from "../../validates";
 import { Icon, PrivateContainer } from "../../../../components";
 import { useSelector } from "react-redux";
 import { selectUserRole, selectUserSession } from "../../../../services/store/selectors/selectors";
+import { createNewPost } from "../../../../api";
 
 export const NewPost = () => {
   const userSession = useSelector(selectUserSession);

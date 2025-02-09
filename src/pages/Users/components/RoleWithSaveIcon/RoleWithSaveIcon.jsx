@@ -7,8 +7,9 @@ import { Button, Icon } from "../../../../components";
 import { Field } from "./components";
 import styled from "styled-components";
 import { PROP_TYPES } from "../../../../services";
-import { saveUser, deleteUser } from "../../../../api";
+
 import PropTypes from "prop-types";
+import { deleteUser, saveUser } from "../../../../api";
 
 const Container = ({ className, children }) => <div className={className}>{children}</div>;
 

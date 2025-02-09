@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector, useStore } from "react-redux";
-import { getRoles, getUsers, ROLES_ACTION_TYPES, USERS_ACTION_TYPES } from "../../services/store/actions";
+import { useDispatch, useSelector } from "react-redux";
+
 import { PrivateContainer } from "../../components";
 import { Table } from "../../components/Table/Table";
 import { RoleWithSaveIcon } from "./components/RoleWithSaveIcon/RoleWithSaveIcon";
@@ -8,8 +8,9 @@ import { selectUserRole, selectUsers } from "../../services/store/selectors/sele
 import { ScrollableContainer } from "./components";
 import { ROLES } from "../../services";
 import { useNavigate } from "react-router";
-import { request } from "../../utils";
 import { DateTime } from "luxon";
+import { getUsers } from "../../api";
+import { ROLES_ACTION_TYPES, USERS_ACTION_TYPES } from "../../services/store/constants";
 
 const tableStyleProps = {
   table: {

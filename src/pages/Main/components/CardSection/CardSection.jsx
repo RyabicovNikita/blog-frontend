@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { contentBack_img } from "../../../../images";
 import { CardContainer, Scrollable, Section } from "../../styled-components";
-import { POSTS_ACTION_TYPES } from "../../../../services/store/actions";
+
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts } from "../../../../services/store/selectors/selectors";
 import { BlogCard, Error, Footer } from "../../../../components";
@@ -11,6 +11,7 @@ import { ERRORS } from "../../../../services/constants/constants";
 import PropTypes from "prop-types";
 import { request } from "../../../../utils";
 import { mapPost } from "../../../../services/helpers";
+import { POSTS_ACTION_TYPES } from "../../../../services/store/constants";
 
 export const CardSection = ({ cardSectionRef }) => {
   const lastPostRef = useRef(null);

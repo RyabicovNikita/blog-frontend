@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { CardSection, MainSection } from "./components";
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { POSTS_ACTION_TYPES } from "../../services/store/actions";
+import { POSTS_ACTION_TYPES } from "../../services/store/constants";
+
 const Main = styled.main`
   height: 100vh;
   overflow-y: auto;

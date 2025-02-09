@@ -1,4 +1,4 @@
-import { POST_ACTION_TYPES } from "../actions";
+import { POST_ACTION_TYPES } from "../constants";
 
 const initialPostState = {};
 
