@@ -26,7 +26,7 @@ export const PostContent = ({ setIsModalOpen }) => {
   const contentRef = useRef(null);
   const dispatch = useDispatch();
   const post = useSelector(selectPost);
-  console.log(post);
+
   const {
     register,
     unregister,

@@ -32,8 +32,8 @@ function Blog() {
           <Route path="/" element={<MainContainer />} />
           <Route path="/auth" element={<AuthForm>SIGN IN</AuthForm>} />
           <Route path="/users" element={<Users />} />
-          <Route path="/post" element={<NewPost />} />
-          <Route path="/post/:postId" element={<Post />} />
+          <Route path="/posts" element={<NewPost />} />
+          <Route path="/posts/:postId" element={<Post />} />
           <Route path="*" element={<Error404 />} />
         </Routes>
       </SearchContext.Provider>

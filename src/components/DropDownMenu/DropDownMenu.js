@@ -27,7 +27,7 @@ export const DropDownMenu = ({ setIsMenuOpen, animation }) => {
         )}
         {(userRoleID === ROLES.ADMIN || userRoleID === ROLES.MODERATOR) && (
           <li className="menu__list-item">
-            <Link onClick={onItemClick} to={`/post`}>
+            <Link onClick={onItemClick} to={`/posts`}>
               New blog
             </Link>
           </li>

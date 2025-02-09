@@ -19,7 +19,7 @@ export const BlogCard = ({ post, lastPostRef }) => {
           </div>
           <div className="card-info">
             <span className="card-info__content">{content}</span>
-            <Link className="card-info__post-link" to={`/post/${id}`}>
+            <Link className="card-info__post-link" to={`/posts/${id}`}>
               Read Article
               <span className="licon icon-arr icon-black" />
             </Link>
