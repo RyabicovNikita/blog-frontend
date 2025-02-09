@@ -38,7 +38,7 @@ export const getPost = async (postId) => {
 
 export const deletePost = async (postId) => {
   try {
-    request(`posts/${postId}`);
+    request(`posts/${postId}`, "DELETE");
   } catch (error) {
     console.error(error);
   }
