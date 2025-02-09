@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { Comments, PostContent } from "./components";
 import "./Post.scss";
-import { Modal, Loader, PrivateContainer } from "../../components";
+import { Modal, Loader, PrivateContainer, Error } from "../../components";
 import { Error404 } from "../NotFound/NotFound";
 
 export const Post = () => {
@@ -19,6 +19,10 @@ export const Post = () => {
   useEffect(() => {
     getPost(postId)
       .then((postData) => {
+        if (postData?.error) {
+          setServerError(postData.error);
+          return;
+        }
         dispatch({ type: POST_ACTION_TYPES.GET_POST, payload: postData });
       })
       .catch((error) => {
@@ -37,7 +41,7 @@ export const Post = () => {
 
   const confirmDeletePost = () => {
     deletePost(postId).then((result) => {
-      if (result.error) {
+      if (result?.error) {
         setAccessError(result.error);
         setIsModalOpen(false);
         return;
@@ -55,7 +59,7 @@ export const Post = () => {
       ) : (
         <PrivateContainer error={accessError}>
           {serverError ? (
-            serverError
+            <Error>{serverError}</Error>
           ) : (
             <>
               <PostContent setIsModalOpen={setIsModalOpen} />

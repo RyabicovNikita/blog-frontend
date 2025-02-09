@@ -71,7 +71,7 @@ export const AuthForm = () => {
     } else {
       response = await request("login", "POST", { login, password });
     }
-    const { error = "", user } = response;
+    const { error = "", user = null } = response;
     if (error) {
       setServerError(error);
       return;

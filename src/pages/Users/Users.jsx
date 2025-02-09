@@ -9,6 +9,7 @@ import { ScrollableContainer } from "./components";
 import { ROLES } from "../../services";
 import { useNavigate } from "react-router";
 import { request } from "../../utils";
+import { DateTime } from "luxon";
 
 const tableStyleProps = {
   table: {
@@ -52,7 +53,6 @@ export const Users = () => {
   useEffect(() => {
     if (!accessRoles.includes(userRole)) navigate("/auth");
   }, [userRole]);
-
   return (
     <ScrollableContainer>
       <PrivateContainer error={accessError}>
@@ -60,7 +60,11 @@ export const Users = () => {
           styles={tableStyleProps}
           data={
             users?.map((user) => ({
-              columns: [user.login, user.registed_at, <RoleWithSaveIcon user={user} />],
+              columns: [
+                user.login,
+                DateTime.fromISO(user.registed_at).toFormat("dd.MM.yyyy"),
+                <RoleWithSaveIcon user={user} />,
+              ],
             })) ?? []
           }
         />
