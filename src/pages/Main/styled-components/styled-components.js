@@ -53,6 +53,7 @@ export const Container = styled.div`
 `;
 
 export const Title = styled.h1`
+  font-size: 100px;
   padding: 0;
   margin: 0;
   background: linear-gradient(-45deg, #ffffff, #000000, #ffffff, #ffffff);

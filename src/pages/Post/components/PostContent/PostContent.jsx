@@ -12,6 +12,7 @@ import { Icon } from "../../../../components";
 import PropTypes from "prop-types";
 import { request } from "../../../../utils";
 import { POST_ACTION_TYPES } from "../../../../services/store/constants";
+import { mapPost } from "../../../../services/helpers";
 
 const FIELD_NAME = {
   title: "title",
@@ -89,7 +90,7 @@ export const PostContent = ({ setIsModalOpen }) => {
             setServerError(body.error);
             return;
           }
-          dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: body });
+          dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: mapPost(body) });
           setIsEditPost(false);
           deleteServerErrorIfNeed();
         });
@@ -115,7 +116,7 @@ export const PostContent = ({ setIsModalOpen }) => {
         setServerError(res.error);
         return;
       }
-      dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: res.body });
+      dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: mapPost(res.body) });
     });
   };
 
@@ -125,7 +126,7 @@ export const PostContent = ({ setIsModalOpen }) => {
         setServerError(res.error);
         return;
       }
-      dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: res.body });
+      dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: mapPost(res.body) });
     });
   };
 

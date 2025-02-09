@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 export const MainSection = ({ scrollDownClick }) => (
   <Section href={mainBack_img}>
     <Container>
-      <Title>Lorem, ipsum dolor sit amet consectetur adipisicing elit.</Title>
+      <Title>All about programming and even a little more</Title>
       <Arrow>
         <Icon
           className="fa fa-chevron-down drop-down-icon"
