@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import "./BlogCard.scss";
 import { PROP_TYPES } from "../../services";
+import "./BlogCard.scss";
 
 export const BlogCard = ({ post, lastPostRef }) => {
   const { id, title, content, image_url, published_at, likes, comments } = post;

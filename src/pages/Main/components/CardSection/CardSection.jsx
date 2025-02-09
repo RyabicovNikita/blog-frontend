@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { contentBack_img } from "../../../../images";
 import { CardContainer, Scrollable, Section } from "../../styled-components";
-
 import { useDispatch, useSelector } from "react-redux";
 import { selectPosts } from "../../../../services/store/selectors/selectors";
 import { BlogCard, Error, Footer } from "../../../../components";

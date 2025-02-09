@@ -110,11 +110,23 @@ export const PostContent = ({ setIsModalOpen }) => {
   };
 
   const onLikeClick = () => {
-    addLike(postId, userId).then(({ body }) => dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: body }));
+    addLike(postId, userId).then((res) => {
+      if (res?.error) {
+        setServerError(res.error);
+        return;
+      }
+      dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: res.body });
+    });
   };
 
   const onDislikeClick = () => {
-    deleteLike(postId, userId).then(({ body }) => dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: body }));
+    deleteLike(postId, userId).then((res) => {
+      if (res?.error) {
+        setServerError(res.error);
+        return;
+      }
+      dispatch({ type: POST_ACTION_TYPES.UPDATE_POST, payload: res.body });
+    });
   };
 
   return (

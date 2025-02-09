@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import "./ContextMenu.scss";
 import PropTypes from "prop-types";
+import "./ContextMenu.scss";
 
 export const ContextMenu = ({ onClick, top, left }) => {
   const ContextMenuStyled = styled.div`
@@ -26,7 +26,6 @@ export const ContextMenu = ({ onClick, top, left }) => {
 };
 
 ContextMenu.propTypes = {
-  actions: PropTypes.array.isRequired,
   top: PropTypes.number.isRequired,
   left: PropTypes.number.isRequired,
 };

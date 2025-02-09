@@ -1,5 +1,3 @@
-import { applyMiddleware, combineReducers, compose } from "redux";
-import { thunk } from "redux-thunk";
 import { postReducer, postsReducer, usersReducer } from "./reducers";
 import { rolesReducer } from "./reducers/roles-reducer";
 

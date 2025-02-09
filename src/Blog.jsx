@@ -1,8 +1,5 @@
 import { Route, Routes, useLocation } from "react-router";
-import "./Blog.css";
-
 import { AuthForm } from "./pages/AuthForm/AuthForm";
-
 import { useDispatch } from "react-redux";
 import { SESSION_STORAGE_USER } from "./services";
 import { NewPost, Post } from "./pages/Post";
@@ -12,6 +9,7 @@ import { useLayoutEffect, useState } from "react";
 import { setUser } from "./services/store/slice/authSlice";
 import { SearchContext } from "./services/context/context";
 import { Footer, HeaderContainer } from "./components";
+import "./Blog.css";
 
 function Blog() {
   const dispatch = useDispatch();

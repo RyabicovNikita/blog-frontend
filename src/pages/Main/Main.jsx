@@ -1,23 +1,8 @@
-import styled from "styled-components";
 import { CardSection, MainSection } from "./components";
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { POSTS_ACTION_TYPES } from "../../services/store/constants";
-
-const Main = styled.main`
-  height: 100vh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  @keyframes key-down-move {
-    0% {
-      top: 0;
-    }
-    100% {
-      top: 100%;
-    }
-  }
-`;
+import { Main } from "./styled-components";
 
 export const MainContainer = () => {
   const dispatch = useDispatch();

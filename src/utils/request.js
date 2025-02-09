@@ -5,4 +5,6 @@ export const request = (url, method, data) =>
     },
     method: method || "GET",
     body: data ? JSON.stringify(data) : undefined,
-  }).then((res) => res.json());
+  })
+    .catch((e) => ({ error: e }))
+    .then((res) => res.json());

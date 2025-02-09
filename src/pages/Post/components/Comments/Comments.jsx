@@ -1,23 +1,13 @@
 import * as yup from "yup";
 import { useEffect, useState } from "react";
-import { Comment } from "./components/Comment/Comment";
 import { useDispatch, useSelector } from "react-redux";
 import { selectComments, selectPostID, selectUser } from "../../../../services/store/selectors/selectors";
-
-import { ContextMenu, Error, Icon } from "../../../../components";
-
-import "./Comments.scss";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ROLES } from "../../../../services";
 import { addNewComment, deleteComment } from "../../../../api";
 import { POST_ACTION_TYPES } from "../../../../services/store/constants";
-const shapeObject = {
-  comment: yup
-    .string()
-    .min(10, "Минимальный размер комментария - 10 символов.")
-    .max(1000, "Длина символов в комментарии не может превышать 1000 символов."),
-};
+import { shapeObject } from "./constants";
+import { CommentsLayout } from "./components/Layout";
 
 export const Comments = () => {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
@@ -50,7 +40,7 @@ export const Comments = () => {
 
   const onSubmit = ({ comment }) => {
     addNewComment(postId, comment).then((response) => {
-      if (response.error) {
+      if (response?.error) {
         setServerError(response.error);
         return;
       }
@@ -83,7 +73,13 @@ export const Comments = () => {
   };
 
   const onDeleteCommentClick = () => {
-    dispatch(deleteComment(postId, deletedCommentID));
+    deleteComment(postId, deletedCommentID).then((res) => {
+      if (res?.error) {
+        setServerError(res.error);
+        return;
+      }
+      dispatch({ type: POST_ACTION_TYPES.DELETE_COMMENT, payload: deletedCommentID });
+    });
   };
 
   const commentError = errors?.comment?.message;
@@ -95,49 +91,21 @@ export const Comments = () => {
   }, [commentError]);
 
   return (
-    <div className="comments">
-      {user.role_id !== ROLES.GHOST && (
-        <form onSubmit={handleSubmit(onSubmit)} className="comments__new-comment">
-          <div className="comments__input-container">
-            <textarea
-              className="comments__comment edit"
-              style={{ borderColor: commentError || serverError ? "red" : "white" }}
-              type="text"
-              name="input-comment"
-              placeholder="Комментарий..."
-              {...register("comment", {
-                onChange: () => setServerError(null),
-              })}
-            ></textarea>
-            <button
-              className="comments__add-comment"
-              onMouseOver={() => setSendOnHoverClass("")}
-              onMouseOut={() => setSendOnHoverClass("-o")}
-            >
-              <Icon className={`fa fa-paper-plane${sendOnHoverClass}`} />
-            </button>
-          </div>
-          {(serverError || commentError) && (
-            <div className="comments__error-window">
-              <Error>{serverError || commentError}</Error>
-            </div>
-          )}
-        </form>
-      )}
-      <div className="comments__container">
-        {isContextMenuOpen && <ContextMenu top={points.y} left={points.x} onClick={onDeleteCommentClick} />}
-        {comments &&
-          comments.map(({ id, author_login, content, published_at }) => (
-            <Comment
-              onContextMenu={handleContextMenu}
-              key={id}
-              id={id}
-              author_login={author_login}
-              content={content}
-              published_at={published_at}
-            />
-          ))}
-      </div>
-    </div>
+    <CommentsLayout
+      comments={comments}
+      user={user}
+      points={points}
+      isContextMenuOpen={isContextMenuOpen}
+      handleContextMenu={handleContextMenu}
+      commentError={commentError}
+      onDeleteCommentClick={onDeleteCommentClick}
+      register={register}
+      handleSubmit={handleSubmit}
+      onSubmit={onSubmit}
+      sendOnHoverClass={sendOnHoverClass}
+      setSendOnHoverClass={setSendOnHoverClass}
+      serverError={serverError}
+      setServerError={setServerError}
+    />
   );
 };

@@ -25,14 +25,6 @@ export const getPost = async (postId) => {
   return mapPost(post, sortByDateComments);
 };
 
-export const createNewPost = async (data) => {
-  return request(`posts`, "POST", data);
-};
+export const createNewPost = (data) => request(`posts`, "POST", data);
 
-export const deletePost = async (postId) => {
-  try {
-    request(`posts/${postId}`, "DELETE");
-  } catch (error) {
-    console.error(error);
-  }
-};
+export const deletePost = (postId) => request(`posts/${postId}`, "DELETE");

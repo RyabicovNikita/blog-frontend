@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import "./Footer.scss";
 import { getWeatherWithIcon } from "../../services";
+import { getWeatherUserCountry } from "../../services/weathers";
+import "./Footer.scss";
 
 export const Footer = () => {
   const [userCountry, setUserCountry] = useState("");
   const [temp, setTemp] = useState("");
   const [weather, setWeather] = useState("");
   useEffect(() => {
-    // getWeatherUserCountry().then((data) => {
-    //   setUserCountry(data?.country ?? null);
-    //   setTemp(data?.temp ?? null);
-    //   setWeather(data?.weather ?? null);
-    // });
+    getWeatherUserCountry().then((data) => {
+      setUserCountry(data?.country ?? null);
+      setTemp(data?.temp ?? null);
+      setWeather(data?.weather ?? null);
+    });
   }, []);
   return (
     <footer className="footer">

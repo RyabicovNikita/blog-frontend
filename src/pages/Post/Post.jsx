@@ -1,14 +1,12 @@
 import { useNavigate, useParams } from "react-router";
 import { useDispatch } from "react-redux";
-
 import { useEffect, useState } from "react";
-
 import { Comments, PostContent } from "./components";
-import "./Post.scss";
 import { Modal, Loader, PrivateContainer, Error } from "../../components";
 import { Error404 } from "../NotFound/NotFound";
 import { deletePost, getPost } from "../../api";
 import { POST_ACTION_TYPES } from "../../services/store/constants";
+import "./Post.scss";
 
 export const Post = () => {
   const [accessError, setAccessError] = useState(null);

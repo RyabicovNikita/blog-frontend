@@ -1,14 +1,12 @@
+import styled from "styled-components";
+import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { RecordSelectionMenu } from "../RecordSelectionMenu/RecordSelectionMenu";
 import { useDispatch, useSelector } from "react-redux";
-
 import { selectRoles, selectUser } from "../../../../services/store/selectors/selectors";
 import { Button, Icon } from "../../../../components";
 import { Field } from "./components";
-import styled from "styled-components";
 import { PROP_TYPES } from "../../../../services";
-
-import PropTypes from "prop-types";
 import { deleteUser, saveUser } from "../../../../api";
 
 const Container = ({ className, children }) => <div className={className}>{children}</div>;

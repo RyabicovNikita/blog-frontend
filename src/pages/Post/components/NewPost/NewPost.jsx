@@ -60,7 +60,7 @@ export const NewPost = () => {
   const handleSave = () => {
     try {
       createNewPost(postValue).then((response) => {
-        if (response.error) {
+        if (response?.error) {
           setServerError(response.error);
           return;
         }

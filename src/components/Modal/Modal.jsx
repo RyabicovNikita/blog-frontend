@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { PROP_TYPES } from "../../services";
 
 const ModalContainer = ({ className, children }) => (
   <div className={className}>
@@ -38,7 +37,3 @@ export const Modal = styled(ModalContainer)`
     border-radius: 30px;
   }
 `;
-
-Modal.propTypes = {
-  children: PROP_TYPES.CHILDREN.isRequired,
-};

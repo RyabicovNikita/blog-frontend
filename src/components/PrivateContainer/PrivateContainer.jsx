@@ -12,7 +12,6 @@ export const PrivateContainer = ({ children, access = null, error = null }) => {
 };
 
 PrivateContainer.propTypes = {
-  children: PROP_TYPES.CHILDREN.isRequired,
   access: PropTypes.array,
   error: PROP_TYPES.STRING_OR_NULL,
 };

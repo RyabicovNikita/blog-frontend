@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-
 import { useSelector } from "react-redux";
 import { selectUserLogin, selectUserRole } from "../../services/store/selectors/selectors";
 import { PROP_TYPES, ROLES } from "../../services";
-import "./DropDownMenu.scss";
 import PropTypes from "prop-types";
+import "./DropDownMenu.scss";
+
 export const DropDownMenu = ({ setIsMenuOpen, animation }) => {
   const userLogin = useSelector(selectUserLogin);
   const userRoleID = useSelector(selectUserRole);

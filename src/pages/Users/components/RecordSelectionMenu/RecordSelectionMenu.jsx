@@ -1,4 +1,3 @@
-import "./RecordSelectionMenu.scss";
 import { Table } from "../../../../components/Table/Table";
 import { selectRoles } from "../../../../services/store/selectors/selectors";
 import { useSelector } from "react-redux";

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import { PrivateContainer } from "../../components";
 import { Table } from "../../components/Table/Table";
 import { RoleWithSaveIcon } from "./components/RoleWithSaveIcon/RoleWithSaveIcon";
