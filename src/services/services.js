@@ -22,6 +22,7 @@ export const mergeClasses = (classes, separator) =>
     : "";
 
 export const getWeatherWithIcon = (weather) => {
+  if (typeof weather !== "string") return null;
   switch (weather.toLowerCase()) {
     case "солнечно":
     case "ясно":
